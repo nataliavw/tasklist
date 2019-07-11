@@ -9,15 +9,32 @@ namespace TaskList
             ConsoleKeyInfo command;
             do
             {
-                Console.WriteLine("\nMenu: \n\tPress Q to exit.");
-                command = Console.ReadKey();
+                Console.WriteLine("\nMenu: \n\tPress Q to exit. \n\tPress A to list tasks. \n\tPress L to exit.");
+                command = Console.ReadKey(true);
+               
 
-                if (command.KeyChar == 'q')
+                switch (command.KeyChar)
                 {
-                    Console.Write("\n\tPressed Q");
+                    case 'q':
+                        Console.WriteLine("Quitting");
+                        break;
+                    case 'a':
+                        Console.WriteLine("Adding task");
+                        break;
+                    case 'l':
+                        Console.WriteLine("Listing task");
+                        break;
+                    default:
+                        Console.WriteLine("Command not recognised");
+                        break;
                 }
 
             } while (command.KeyChar != 'q');
+
+            #if DEBUG
+            Console.WriteLine("\n\nPress enter to close");
+            Console.ReadKey();
+            #endif 
         }
     }
 }
