@@ -11,9 +11,8 @@ namespace TaskList
             {
                 Console.WriteLine("\nMenu: \n\tPress Q to exit. \n\tPress A to list tasks. \n\tPress L to exit.");
                 command = Console.ReadKey(true);
-               
 
-                switch (command.KeyChar)
+                switch (char.ToLower(command.KeyChar))
                 {
                     case 'q':
                         Console.WriteLine("Quitting");
