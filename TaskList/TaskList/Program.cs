@@ -1,5 +1,6 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
+
 
 namespace TaskList
 {
@@ -8,11 +9,14 @@ namespace TaskList
         static void Main(string[] args)
         {
             ConsoleKeyInfo command;
-            string path = "c:\\users\\natalia\\desktop\\todo.csv";
+            var list = new Dictionary<int, string>();
+
+            var count = 0;
+            var found = false;
 
             do
             {
-                Console.WriteLine("\nMenu: \n\tPress Q to exit. \n\tPress A to list tasks. \n\tPress L to exit.");
+                Console.WriteLine("\nMenu: \n\tPress Q to exit. \n\tPress A to add tasks. \n\tPress L to list tasks.");
                 command = Console.ReadKey(true);
 
                 switch (char.ToLower(command.KeyChar))
@@ -20,19 +24,32 @@ namespace TaskList
                     case 'q':
                         Console.WriteLine("Quitting");
                         break;
+
                     case 'a':
-                        Console.WriteLine("Adding task");
 
-                        Console.WriteLine("Write a task for the list: ");
-                        string list = Console.ReadLine();
+                        Console.WriteLine("State a task to add:");
 
-                        File.AppendAllText(path, list);
-                        Console.WriteLine($"Appended to file {path}");
+                        do
+                        {
+                            if (list.ContainsKey(count))
+                            {
+                                count++;
+                            }
+                            else
+                            {
+                                found = true;
+                            }
+                        } while (found == false);
+
+
+                        list.Add(count, Console.ReadLine());
 
                         break;
+
                     case 'l':
-                        Console.WriteLine("Listing task");
+                        Console.WriteLine("Listing tasks");
                         break;
+
                     default:
                         Console.WriteLine("Command not recognised");
                         break;
@@ -40,10 +57,10 @@ namespace TaskList
 
             } while (command.KeyChar != 'q');
 
-            #if DEBUG
+#if DEBUG
             Console.WriteLine("\n\nPress enter to close");
             Console.ReadKey();
-            #endif 
+#endif
         }
     }
 }
