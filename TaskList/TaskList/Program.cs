@@ -11,7 +11,7 @@ namespace TaskList
             ConsoleKeyInfo command;
             var list = new Dictionary<int, string>();
 
-            var count = 0;
+            var count = 1;
             var found = false;
 
             do
@@ -47,7 +47,11 @@ namespace TaskList
                         break;
 
                     case 'l':
-                        Console.WriteLine("Listing tasks");
+                        Console.WriteLine("Listing tasks:");
+                        foreach (var currentKVPair in list)
+                        {
+                            Console.WriteLine($"{currentKVPair.Key}:\t {currentKVPair.Value}");
+                        }
                         break;
 
                     default:
