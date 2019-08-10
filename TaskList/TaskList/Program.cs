@@ -16,7 +16,7 @@ namespace TaskList
 
             do
             {
-                Console.WriteLine("\nMenu: \n\tPress Q to exit. \n\tPress A to add tasks. \n\tPress L to list tasks.");
+                Console.WriteLine("\nMenu: \n\tPress Q to exit. \n\tPress A to add tasks. \n\tPress L to list tasks. \n\tPress R to remove a task.");
                 command = Console.ReadKey(true);
 
                 switch (char.ToLower(command.KeyChar))
@@ -40,8 +40,7 @@ namespace TaskList
                                 found = true;
                             }
                         } while (found == false);
-
-
+                        
                         list.Add(count, Console.ReadLine());
 
                         break;
@@ -52,6 +51,13 @@ namespace TaskList
                         {
                             Console.WriteLine($"{currentKVPair.Key}:\t {currentKVPair.Value}");
                         }
+                        break;
+
+                    case 'r':
+                        Console.WriteLine("Select a task number to remove.");
+                        var taskNumberRaw = Console.ReadLine();
+                        var taskNumber = int.Parse(taskNumberRaw);
+                        list.Remove(taskNumber);
                         break;
 
                     default:
