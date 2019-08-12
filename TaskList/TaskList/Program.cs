@@ -10,9 +10,7 @@ namespace TaskList
         {
             ConsoleKeyInfo command;
             var list = new Dictionary<int, string>();
-
-            var count = 1;
-            var found = false;
+            int nextFree;
 
             do
             {
@@ -26,22 +24,16 @@ namespace TaskList
                         break;
 
                     case 'a':
-
                         Console.WriteLine("State a task to add:");
-
+                        nextFree = 0;
                         do
                         {
-                            if (list.ContainsKey(count))
-                            {
-                                count++;
-                            }
-                            else
-                            {
-                                found = true;
-                            }
-                        } while (found == false);
+                            nextFree++;
+                        } while (list.ContainsKey(nextFree));
                         
-                        list.Add(count, Console.ReadLine());
+                        list.Add(nextFree, Console.ReadLine());
+
+                        Console.WriteLine("Task added.");
 
                         break;
 
@@ -51,6 +43,8 @@ namespace TaskList
                         {
                             Console.WriteLine($"{currentKVPair.Key}:\t {currentKVPair.Value}");
                         }
+
+                        Console.ReadKey(true);
                         break;
 
                     case 'r':
