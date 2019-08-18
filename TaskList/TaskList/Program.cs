@@ -16,14 +16,11 @@ namespace TaskList
 
             do
             {
-                Console.WriteLine("\nMenu: \n\tPress Q to exit. \n\tPress A to add tasks. \n\tPress T to list tasks. \n\tPress R to remove a task.\n\tPress S to save the list. \n\tPress L to load the saved list.");
+                Console.WriteLine("\nMenu: \n\tPress A to add a task. \n\tPress R to remove a task. \n\tPress T to list all tasks. \n\tPress L to load the saved list. \n\tPress S to save the current list. \n\tPress Q to exit the program.");
                 command = Console.ReadKey(true);
 
                 switch (char.ToLower(command.KeyChar))
                 {
-                    case 'q':
-                        Console.WriteLine("Quitting");
-                        break;
 
                     case 'a':
                         Console.WriteLine("State a task to add:");
@@ -39,6 +36,14 @@ namespace TaskList
 
                         break;
 
+
+                    case 'r':
+                        Console.WriteLine("Select a task number to remove.");
+                        var taskNumberRaw = Console.ReadLine();
+                        var taskNumber = int.Parse(taskNumberRaw);
+                        list.Remove(taskNumber);
+                        break;
+
                     case 't':
                         Console.WriteLine("Listing tasks:");
                         foreach (var currentKVPair in list)
@@ -50,21 +55,6 @@ namespace TaskList
                         Console.WriteLine("\n\nPress enter to continue");
                         Console.ReadKey();
 #endif
-                        break;
-
-                    case 'r':
-                        Console.WriteLine("Select a task number to remove.");
-                        var taskNumberRaw = Console.ReadLine();
-                        var taskNumber = int.Parse(taskNumberRaw);
-                        list.Remove(taskNumber);
-                        break;
-
-                    case 's':
-                        using (StreamWriter fileOut = new StreamWriter("ToDo.txt"))
-                            foreach (var entry in list)
-                                fileOut.WriteLine(entry.Value);
-                        Console.WriteLine("File saved.");
-
                         break;
 
                     case 'l':
@@ -80,11 +70,22 @@ namespace TaskList
                                 nextFree++;
                             }
                         }
+                        break;
+
+                    case 's':
+                        using (StreamWriter fileOut = new StreamWriter("ToDo.txt"))
+                            foreach (var entry in list)
+                                fileOut.WriteLine(entry.Value);
+                        Console.WriteLine("File saved.");
 
                         break;
 
+                    case 'q':
+                        Console.WriteLine("Quitting");
+                        break;
+
                     default:
-                        Console.WriteLine("Command not recognised");
+                        Console.WriteLine("Command not recognised.");
                         break;
                 }
 
