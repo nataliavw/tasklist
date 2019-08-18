@@ -12,6 +12,7 @@ namespace TaskList
             ConsoleKeyInfo command;
             var list = new Dictionary<int, string>();
             int nextFree;
+            string line;
 
             do
             {
@@ -59,13 +60,26 @@ namespace TaskList
                         break;
 
                     case 's':
-                        using (StreamWriter file = new StreamWriter("ToDo.txt"))
+                        using (StreamWriter fileOut = new StreamWriter("ToDo.txt"))
                             foreach (var entry in list)
-                                file.WriteLine("[{0} {1}]", entry.Key, entry.Value);
+                                fileOut.WriteLine(entry.Value);
                         Console.WriteLine("File saved.");
+
                         break;
 
                     case 'l':
+                        nextFree = 1;
+
+                        list.Clear();
+
+                        using (var fileIn = new StreamReader("ToDo.txt"))
+                        {
+                            while ((line = fileIn.ReadLine()) != null)
+                            {
+                                list.Add(nextFree, line);
+                                nextFree++;
+                            }
+                        }
 
                         break;
 
