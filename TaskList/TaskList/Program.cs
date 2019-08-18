@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 
 namespace TaskList
@@ -14,7 +15,7 @@ namespace TaskList
 
             do
             {
-                Console.WriteLine("\nMenu: \n\tPress Q to exit. \n\tPress A to add tasks. \n\tPress L to list tasks. \n\tPress R to remove a task.");
+                Console.WriteLine("\nMenu: \n\tPress Q to exit. \n\tPress A to add tasks. \n\tPress T to list tasks. \n\tPress R to remove a task.\n\tPress S to save the list. \n\tPress L to load the saved list.");
                 command = Console.ReadKey(true);
 
                 switch (char.ToLower(command.KeyChar))
@@ -37,14 +38,17 @@ namespace TaskList
 
                         break;
 
-                    case 'l':
+                    case 't':
                         Console.WriteLine("Listing tasks:");
                         foreach (var currentKVPair in list)
                         {
                             Console.WriteLine($"{currentKVPair.Key}:\t {currentKVPair.Value}");
                         }
 
-                        Console.ReadKey(true);
+#if DEBUG
+                        Console.WriteLine("\n\nPress enter to continue");
+                        Console.ReadKey();
+#endif
                         break;
 
                     case 'r':
@@ -52,6 +56,17 @@ namespace TaskList
                         var taskNumberRaw = Console.ReadLine();
                         var taskNumber = int.Parse(taskNumberRaw);
                         list.Remove(taskNumber);
+                        break;
+
+                    case 's':
+                        using (StreamWriter file = new StreamWriter("ToDo.txt"))
+                            foreach (var entry in list)
+                                file.WriteLine("[{0} {1}]", entry.Key, entry.Value);
+                        Console.WriteLine("File saved.");
+                        break;
+
+                    case 'l':
+
                         break;
 
                     default:
